@@ -6,49 +6,65 @@ const laser = document.querySelector('.laser');
 const statusText = document.getElementById('status-text');
 const resultsArea = document.getElementById('results-area');
 
+// Click to upload
 dropZone.onclick = () => fileInput.click();
 
+// Handle file selection
 fileInput.onchange = (e) => handleFile(e.target.files[0]);
+
+// Handle drag and drop
+dropZone.ondragover = (e) => {
+    e.preventDefault();
+    dropZone.style.borderColor = "#ffffff";
+};
+
+dropZone.ondragleave = () => {
+    dropZone.style.borderColor = "#ff003c";
+};
 
 dropZone.ondrop = (e) => {
     e.preventDefault();
     handleFile(e.dataTransfer.files[0]);
 };
 
-dropZone.ondragover = (e) => e.preventDefault();
-
 async function handleFile(file) {
     if (!file) return;
-    
-    // UI Transitions
-    laser.style.display = 'block';
+
+    // SWITCH SCREEN IMMEDIATELY
+    dropZone.style.display = 'none';
     resultsArea.classList.remove('hidden');
-    statusText.innerText = `READING BYTES: ${file.name}`;
+    laser.style.display = 'block';
+    statusText.innerText = "INITIALIZING NEURAL OVERRIDE...";
 
-    // 1. Hash the file
-    const arrayBuffer = await file.arrayBuffer();
-    const hashBuffer = await crypto.subtle.digest('SHA-256', arrayBuffer);
-    const fileHash = Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
-
-    // 2. Fetch from VirusTotal
-    statusText.innerText = "QUERYING GLOBAL THREAT DATABASE...";
-    
     try {
-        const response = await fetch(`https://cors-anywhere.herokuapp.com/https://www.virustotal.com/api/v3/files/${fileHash}`, {
+        // 1. Hash the file
+        statusText.innerText = `HASHING: ${file.name}`;
+        const arrayBuffer = await file.arrayBuffer();
+        const hashBuffer = await crypto.subtle.digest('SHA-256', arrayBuffer);
+        const fileHash = Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+
+        // 2. Fetch from VirusTotal (Using a proxy to stop CORS blocks)
+        statusText.innerText = "UPLOADING FINGERPRINT TO DATABASE...";
+        
+        const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://www.virustotal.com/api/v3/files/' + fileHash)}`, {
             headers: { 'x-apikey': API_KEY }
         });
 
-        if (response.status === 404) {
-            statusText.innerHTML = "RESULT: <span style='color: #ffaa00;'>NEW FILE / NO THREATS KNOWN</span>";
+        const data = await response.json();
+        // AllOrigins wraps the result in a 'contents' string
+        const vtData = JSON.parse(data.contents);
+
+        if (vtData.error) {
+            statusText.innerHTML = "RESULT: <span style='color: #ffaa00;'>FILE NOT FOUND IN DATABASE (CLEAN OR NEW)</span>";
         } else {
-            const data = await response.json();
-            const mal = data.data.attributes.last_analysis_stats.malicious;
+            const mal = vtData.data.attributes.last_analysis_stats.malicious;
             statusText.innerHTML = mal > 0 ? 
                 `RESULT: <span style='color: #ff0000;'>${mal} ENGINES FLAGGED AS MALWARE!</span>` : 
-                "RESULT: <span style='color: #00ff00;'>FILE IS CLEAN. SAFE TO EXECUTE.</span>";
+                "RESULT: <span style='color: #00ff00;'>NEURAL SCAN COMPLETE: FILE IS CLEAN.</span>";
         }
     } catch (err) {
-        statusText.innerText = "ERROR: CONNECTION BLOCKED OR LIMIT REACHED.";
+        console.error(err);
+        statusText.innerText = "ERROR: SYSTEM OVERLOAD. CHECK CONSOLE (F12).";
     }
     
     laser.style.display = 'none';
