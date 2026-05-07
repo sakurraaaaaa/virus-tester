@@ -1,1 +1,39 @@
+body {
+    background-color: #000;
+    color: #fff;
+    font-family: 'Courier New', monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
 
+.container {
+    text-align: center;
+    border: 2px solid #ff0000;
+    padding: 50px;
+    box-shadow: 0 0 20px #ff0000;
+}
+
+#drop-zone {
+    width: 400px;
+    height: 200px;
+    border: 2px dashed #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#drop-zone:hover {
+    background-color: rgba(255, 0, 0, 0.1);
+    border-color: #ff0000;
+}
+
+.glitch {
+    color: #ff0000;
+    text-shadow: 2px 2px #fff;
+    font-size: 3rem;
+}
