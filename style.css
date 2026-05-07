@@ -1,0 +1,51 @@
+body {
+    background-color: #008080; /* Classic XP Teal */
+    font-family: 'Courier New', monospace;
+    margin: 0;
+    padding-top: 50px;
+    overflow: hidden;
+}
+
+#xp-taskbar {
+    position: fixed;
+    bottom: 0; left: 0; width: 100%; height: 30px;
+    background: linear-gradient(to bottom, #245edb 0%, #3f8cf3 9%, #245edb 18%, #245edb 92%, #1941a5 100%);
+    border-top: 1px solid #1a3b8d;
+    z-index: 1000;
+}
+
+#start-button {
+    background: linear-gradient(to bottom, #3c9c3c 0%, #5cb85c 9%, #3c9c3c 18%, #3c9c3c 92%, #2d762d 100%);
+    color: white;
+    font-weight: bold;
+    padding: 2px 15px;
+    border-radius: 0 5px 5px 0;
+    box-shadow: 2px 2px #2d762d;
+    float: left;
+}
+
+.window {
+    width: 600px;
+    background-color: #ECE9D8;
+    border: 3px solid #0054E3;
+    border-radius: 5px;
+    margin: 100px auto;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
+}
+
+.title-bar {
+    background: linear-gradient(to bottom, #0054E3 0%, #2D7FFF 100%);
+    padding: 3px;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+}
+
+.window-body {
+    padding: 20px;
+    color: black;
+}
+
+.blink { animation: blink 1s infinite; color: #ff0000; font-weight: bold; }
+@keyframes blink { 50% { opacity: 0; } }
