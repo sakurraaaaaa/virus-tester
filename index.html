@@ -1,19 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>NEURAL SCAN | Virus Tester</title>
+    <meta charset="UTF-8">
+    <title>NEURAL SCAN | BIO-SECURITY</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1 class="glitch">NEURAL_SCAN_v1.0</h1>
-        <div id="drop-zone">
-            <p>DRAG FILE HERE TO ANALYZE</p>
+    <div class="overlay"></div>
+    <div class="scan-container">
+        <header>
+            <h1 class="glitch" data-text="NEURAL_SCAN_v2.0">NEURAL_SCAN_v2.0</h1>
+            <p class="subtitle">PROJECT_BLACKBIRD SECURE_UPLOADER</p>
+        </header>
+
+        <div id="drop-zone" class="scanner">
+            <div class="laser"></div>
+            <div class="inner-text">
+                <span class="icon">▔</span>
+                <p>FEED THE MACHINE (DRAG FILE)</p>
+            </div>
             <input type="file" id="file-input" hidden>
         </div>
+
         <div id="results-area" class="hidden">
-            <div class="loader"></div>
-            <p id="status-text">ANALYZING BYTES...</p>
+            <div class="status-bar">
+                <div id="progress" class="progress-fill"></div>
+            </div>
+            <p id="status-text">INITIALIZING...</p>
         </div>
     </div>
     <script src="script.js"></script>
