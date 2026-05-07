@@ -1,39 +1,70 @@
+:root {
+    --main-red: #ff003c;
+    --bg-black: #0a0a0a;
+}
+
 body {
-    background-color: #000;
-    color: #fff;
-    font-family: 'Courier New', monospace;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background-color: var(--bg-black);
+    color: white;
+    font-family: 'Share Tech Mono', 'Courier New', monospace;
     height: 100vh;
     margin: 0;
-}
-
-.container {
-    text-align: center;
-    border: 2px solid #ff0000;
-    padding: 50px;
-    box-shadow: 0 0 20px #ff0000;
-}
-
-#drop-zone {
-    width: 400px;
-    height: 200px;
-    border: 2px dashed #fff;
+    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
-    transition: 0.3s;
 }
 
-#drop-zone:hover {
-    background-color: rgba(255, 0, 0, 0.1);
-    border-color: #ff0000;
+/* Background grid effect */
+.overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+}
+
+.scan-container {
+    width: 90%;
+    max-width: 600px;
+    border: 1px solid var(--main-red);
+    padding: 40px;
+    background: rgba(20, 20, 20, 0.9);
+    box-shadow: 0 0 30px rgba(255, 0, 60, 0.2);
+}
+
+.scanner {
+    position: relative;
+    height: 250px;
+    border: 1px solid #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.laser {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 2px;
+    background: var(--main-red);
+    box-shadow: 0 0 15px var(--main-red);
+    animation: scan 3s infinite linear;
+    display: none;
+}
+
+@keyframes scan {
+    0% { top: 0; }
+    100% { top: 100%; }
 }
 
 .glitch {
-    color: #ff0000;
-    text-shadow: 2px 2px #fff;
-    font-size: 3rem;
+    color: var(--main-red);
+    font-size: 2.5rem;
+    position: relative;
+    text-transform: uppercase;
 }
+
+.hidden { display: none; }
