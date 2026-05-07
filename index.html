@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NEURAL SCAN | BIO-SECURITY</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -16,16 +17,12 @@
         <div id="drop-zone" class="scanner">
             <div class="laser"></div>
             <div class="inner-text">
-                <span class="icon">▔</span>
                 <p>FEED THE MACHINE (DRAG FILE)</p>
             </div>
             <input type="file" id="file-input" hidden>
         </div>
 
         <div id="results-area" class="hidden">
-            <div class="status-bar">
-                <div id="progress" class="progress-fill"></div>
-            </div>
             <p id="status-text">INITIALIZING...</p>
         </div>
     </div>
